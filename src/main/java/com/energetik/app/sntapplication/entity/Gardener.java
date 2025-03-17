@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,25 +30,28 @@ public class Gardener implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    String firstName; //имя
-    String middleName; //отчество
-    String lastName; //фамилия
-    String phone; // номер телефона
+    private String firstName; //имя
+    private String middleName; //отчество
+    private String lastName; //фамилия
+    private String phone; // номер телефона
 
     @Column(unique = true)
-    String email; //почта
-    boolean isMember; //является ли членом СНТ
-    LocalDateTime dateEnter; // дата вступления
-    String documentEnter; // документ, подтверждающий вступление
-    LocalDateTime dateOut; // дата выхода
-    String reasonOut; // причина выхода
+    private String email; //почта
+    private boolean isMember; //является ли членом СНТ
+    private LocalDateTime dateEnter; // дата вступления
+    private String documentEnter; // документ, подтверждающий вступление
+    private LocalDateTime dateOut; // дата выхода
+    private String reasonOut; // причина выхода
 
     @Column(unique = true)
-    String passport; // номер паспорта
-    String addressRegistration; //адрес регистрации
-    String addressResidential; // адрес проживания
-    String note; // заметка
-    boolean isArchive; // архивная ли запись
+    private String passport; // номер паспорта
+    private String addressRegistration; //адрес регистрации
+    private String addressResidential; // адрес проживания
+    private String note; // заметка
+    private boolean isArchive; // архивная ли запись
+
+    @OneToMany(mappedBy = "gardener", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Payment> payments;
 
     public Long getId() {
         return id;

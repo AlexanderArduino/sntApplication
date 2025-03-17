@@ -15,9 +15,9 @@ public interface GardenerService {
 
     boolean existGardenerById(Long id);
 
-    void saveGardener(Gardener gardener);
+    Gardener saveGardener(Gardener gardener);
 
-    void updateGardener(Gardener gardener);
+    Gardener updateGardener(Gardener gardener);
 
     void deleteGardenerById(Long id);
 }
