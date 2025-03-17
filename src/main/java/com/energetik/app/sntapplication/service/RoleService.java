@@ -1,6 +1,6 @@
 package com.energetik.app.sntapplication.service;
 
-import com.energetik.app.sntapplication.security.Role;
+import com.energetik.app.sntapplication.entity.Role;
 
 import java.util.Optional;
 
