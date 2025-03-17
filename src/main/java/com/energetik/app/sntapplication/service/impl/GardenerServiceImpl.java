@@ -43,7 +43,7 @@ public class GardenerServiceImpl implements GardenerService {
     }
 
     @Override
-    public void saveGardener(Gardener gardener) {
+    public Gardener saveGardener(Gardener gardener) {
         if (gardener == null || gardener.getUsername() == null) {
             throw new IllegalArgumentException(String.format("User or user.username must be not null"));
         }
@@ -55,13 +55,14 @@ public class GardenerServiceImpl implements GardenerService {
             nGardener.setPassword(passwordEncoder.encode(gardener.getPassword()));
             nGardener.setRoles(gardener.getRoles());
             gardenerRepository.saveAndFlush(gardener);
+            return nGardener;
         } else {
             throw new IllegalArgumentException(String.format("User with username: %s was exist", gardener.getUsername()));
         }
     }
 
     @Override
-    public void updateGardener(Gardener gardener) {
+    public Gardener updateGardener(Gardener gardener) {
         if (gardener == null || gardener.getUsername() == null) {
             throw new IllegalArgumentException(String.format("User or user.username must be not null"));
         }
@@ -73,6 +74,7 @@ public class GardenerServiceImpl implements GardenerService {
             nGardener.setPassword(passwordEncoder.encode(gardener.getPassword()));
             nGardener.setRoles(gardener.getRoles());
             gardenerRepository.saveAndFlush(gardener);
+            return nGardener;
         } else {
             throw new IllegalArgumentException(String.format("User with username: %s was not exist", gardener.getUsername()));
         }

@@ -2,7 +2,9 @@ package com.energetik.app.sntapplication.init;
 
 
 import com.energetik.app.sntapplication.entity.Gardener;
+import com.energetik.app.sntapplication.entity.Payment;
 import com.energetik.app.sntapplication.entity.Role;
+import com.energetik.app.sntapplication.service.PaymentService;
 import com.energetik.app.sntapplication.service.RoleService;
 import com.energetik.app.sntapplication.service.GardenerService;
 import jakarta.annotation.PostConstruct;
@@ -24,9 +26,13 @@ public class InitUserAndRoles {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
-    public InitUserAndRoles(GardenerService gardenerService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    private final PaymentService paymentService;
+
+    public InitUserAndRoles(GardenerService gardenerService, RoleService roleService,
+                            PasswordEncoder passwordEncoder, PaymentService paymentService) {
         this.gardenerService = gardenerService;
         this.roleService = roleService;
+        this.paymentService = paymentService;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -79,5 +85,17 @@ public class InitUserAndRoles {
         gardenerService.saveGardener(gardener);
         gardenerService.saveGardener(gardener1);
         gardenerService.saveGardener(admin);
+
+        Payment payment1 = new Payment();
+        payment1.setSumma(9500d);
+        payment1.setDateOfPayment(LocalDateTime.of(2001,1,1,12,0,0));
+        payment1.setPeriodFrom(LocalDateTime.of(2001, 1, 1, 0,0,0));
+        payment1.setPeriodTo(LocalDateTime.of(2001, 12, 31, 23,59,59));
+        payment1.setTargetPay(true);
+        payment1.setElectricityPay(false);
+        payment1.setCash(false);
+        payment1.setGardener(gardenerService.findGardenerByUsername("aleks").orElse(null));
+
+        paymentService.savePayment(payment1);
     }
 }
