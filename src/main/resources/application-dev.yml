@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: sntApplication
+  datasource:
+    url: jdbc:postgresql://localhost:5555/snt_database?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+#  sql:
+#    init:
+#      schema-locations: classpath:sqlScript/data-init-dev.sql
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: debug
