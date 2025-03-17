@@ -1,7 +1,7 @@
 package com.energetik.app.sntapplication.repository;
 
 
-import com.energetik.app.sntapplication.security.Role;
+import com.energetik.app.sntapplication.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

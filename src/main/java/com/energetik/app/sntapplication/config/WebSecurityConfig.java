@@ -1,8 +1,8 @@
 package com.energetik.app.sntapplication.config;
 
 
-import com.energetik.app.sntapplication.repository.UserRepository;
-import com.energetik.app.sntapplication.security.User;
+import com.energetik.app.sntapplication.repository.GardenerRepository;
+import com.energetik.app.sntapplication.entity.Gardener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private final UserRepository userRepository;
+    private final GardenerRepository gardenerRepository;
     private final SuccessUserHandler successUserHandler;
 
     @Autowired
-    public WebSecurityConfig(UserRepository userRepository,
+    public WebSecurityConfig(GardenerRepository gardenerRepository,
                              SuccessUserHandler successUserHandler) {
-        this.userRepository = userRepository;
+        this.gardenerRepository = gardenerRepository;
         this.successUserHandler = successUserHandler;
     }
 
@@ -42,8 +42,9 @@ public class WebSecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/admin", "/user").hasRole("ADMIN")
                         .requestMatchers("/user").hasRole("USER")
+                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(login -> login.permitAll()
                         .successHandler(successUserHandler))
@@ -54,7 +55,7 @@ public class WebSecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            Optional<User> optionalUser = userRepository.findUserByUsername(username);
+            Optional<Gardener> optionalUser = gardenerRepository.findGardenerByUsername(username);
             if (optionalUser.isEmpty()) {
                 throw new UsernameNotFoundException("User not found");
             }

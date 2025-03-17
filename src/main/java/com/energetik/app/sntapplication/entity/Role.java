@@ -1,4 +1,4 @@
-package com.energetik.app.sntapplication.security;
+package com.energetik.app.sntapplication.entity;
 
 
 import jakarta.persistence.*;
@@ -19,15 +19,15 @@ public class Role implements GrantedAuthority {
     private String rolename;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Set<User> usersList;
+    private Set<Gardener> gardenerSet;
 
     public Role() {
     }
 
-    public Role(Long id, String rolename, Set<User> usersList) {
+    public Role(Long id, String rolename, Set<Gardener> gardenerSet) {
         this.id = id;
         this.rolename = rolename;
-        this.usersList = usersList;
+        this.gardenerSet = gardenerSet;
     }
 
     public Long getId() {
@@ -46,12 +46,12 @@ public class Role implements GrantedAuthority {
         this.rolename = rolename;
     }
 
-    public Set<User> getUsersList() {
-        return usersList;
+    public Set<Gardener> getGardenerSet() {
+        return gardenerSet;
     }
 
-    public void setUsersList(Set<User> usersList) {
-        this.usersList = usersList;
+    public void setGardenerSet(Set<Gardener> gardenerSet) {
+        this.gardenerSet = gardenerSet;
     }
 
     @Override

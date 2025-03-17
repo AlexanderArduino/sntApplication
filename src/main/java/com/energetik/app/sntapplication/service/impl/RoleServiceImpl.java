@@ -2,7 +2,7 @@ package com.energetik.app.sntapplication.service.impl;
 
 
 import com.energetik.app.sntapplication.repository.RoleRepository;
-import com.energetik.app.sntapplication.security.Role;
+import com.energetik.app.sntapplication.entity.Role;
 import com.energetik.app.sntapplication.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

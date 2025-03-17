@@ -1,7 +1,7 @@
 package com.energetik.app.sntapplication.repository;
 
 
-import com.energetik.app.sntapplication.security.User;
+import com.energetik.app.sntapplication.entity.Gardener;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface GardenerRepository extends JpaRepository<Gardener, Long> {
 
     @Query("""
-            SELECT u FROM User u JOIN FETCH u.roles WHERE u.username = :username
+            SELECT g FROM Gardener g JOIN FETCH g.roles WHERE g.username = :username
             """)
-    Optional<User> findUserByUsername(@Param("username") String username);
+    Optional<Gardener> findGardenerByUsername(@Param("username") String username);
 
 }
