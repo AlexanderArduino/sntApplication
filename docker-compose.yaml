@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:17
     container_name: snt_energetik_postgres
     restart: always
     environment:
@@ -14,5 +14,18 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  postgres_test:
+    image: postgres:17
+    container_name: test_snt_energetik_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: test_snt_database
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+    ports:
+      - "9999:5432"
+    volumes:
+      - postgres_date_test:/var/lib/postgres/data
 volumes:
   postgres_data:
+  postgres_date_test:
