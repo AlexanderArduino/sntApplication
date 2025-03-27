@@ -12,9 +12,14 @@ import java.util.Optional;
 @Repository
 public interface GardenerRepository extends JpaRepository<Gardener, Long> {
 
-    @Query("""
-            SELECT g FROM Gardener g JOIN FETCH g.roles WHERE g.username = :username
-            """)
-    Optional<Gardener> findGardenerByUsername(@Param("username") String username);
+//    @Query("""
+//            SELECT g FROM Gardener g JOIN FETCH g.roles WHERE g.username = :username
+//            """)
+//    Optional<Gardener> findGardenerByUsername(@Param("username") String username);
+
+    Optional<Gardener> findGardenerByUsername(String username);
+
+
+
 
 }

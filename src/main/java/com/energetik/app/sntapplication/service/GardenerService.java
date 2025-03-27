@@ -17,7 +17,7 @@ public interface GardenerService {
 
     Gardener saveGardener(Gardener gardener);
 
-    Gardener updateGardener(Gardener gardener);
+    Gardener updateGardener(String username, Gardener gardener);
 
     void deleteGardenerById(Long id);
 }

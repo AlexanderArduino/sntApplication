@@ -4,6 +4,9 @@ package com.energetik.app.sntapplication.service.impl;
 import com.energetik.app.sntapplication.repository.RoleRepository;
 import com.energetik.app.sntapplication.entity.Role;
 import com.energetik.app.sntapplication.service.RoleService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +18,9 @@ import java.util.Optional;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     public RoleServiceImpl(RoleRepository roleRepository) {
