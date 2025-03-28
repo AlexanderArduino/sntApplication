@@ -50,21 +50,21 @@ public class InitUserAndRoles {
 
         Gardener gardener = new Gardener();
         gardener.setUsername("user");
-        gardener.setPassword(passwordEncoder.encode("user"));
+        gardener.setPassword("user");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(roleService.findRoleByRolename("USER").orElse(null));
         gardener.setRoles(userRoles);
 
         Gardener admin = new Gardener();
         admin.setUsername("admin");
-        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setPassword("admin");
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(roleService.findRoleByRolename("ADMIN").orElse(null));
         admin.setRoles(adminRoles);
 
         Gardener gardener1 = new Gardener();
         gardener1.setUsername("aleks");
-        gardener1.setPassword(passwordEncoder.encode("aleks"));
+        gardener1.setPassword("aleks");
         gardener1.setRoles(adminRoles);
         gardener1.setFirstName("Aleksander");
         gardener1.setMiddleName("Igorevich");

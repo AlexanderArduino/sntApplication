@@ -24,7 +24,7 @@ public class Gardener implements UserDetails {
     private String username;
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "gardeners-roles",
             joinColumns = @JoinColumn(name = "gardener_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
