@@ -1,13 +1,10 @@
 package com.energetik.app.sntapplication.service.impl;
 
 
-import com.energetik.app.sntapplication.repository.GardenerRepository;
 import com.energetik.app.sntapplication.entity.Gardener;
+import com.energetik.app.sntapplication.repository.GardenerRepository;
 import com.energetik.app.sntapplication.service.GardenerService;
-import jakarta.persistence.*;
-import org.aspectj.weaver.GeneratedReferenceTypeDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +26,9 @@ public class GardenerServiceImpl implements GardenerService {
 
     @Override
     @Transactional(readOnly = true)
-            public Optional<Gardener> findGardenerById(Long id) {
-                return gardenerRepository.findById(id);
-            }
+    public Optional<Gardener> findGardenerById(Long id) {
+        return gardenerRepository.findById(id);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -86,6 +83,8 @@ public class GardenerServiceImpl implements GardenerService {
             nGardener.setAddressResidential(gardener.getAddressResidential());
             nGardener.setNote(gardener.getNote());
             nGardener.setArchive(gardener.isArchive());
+            nGardener.setConversations(gardener.getConversations());
+            nGardener.setPayments(gardener.getPayments());
             return gardenerRepository.save(nGardener);
         } else {
             throw new IllegalArgumentException(String.format("Gardener with username: %s was not exist", username));

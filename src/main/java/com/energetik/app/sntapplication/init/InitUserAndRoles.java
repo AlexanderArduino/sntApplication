@@ -1,16 +1,16 @@
 package com.energetik.app.sntapplication.init;
 
 
+import com.energetik.app.sntapplication.entity.Conversation;
 import com.energetik.app.sntapplication.entity.Gardener;
 import com.energetik.app.sntapplication.entity.Payment;
 import com.energetik.app.sntapplication.entity.Role;
+import com.energetik.app.sntapplication.service.ConversationService;
+import com.energetik.app.sntapplication.service.GardenerService;
 import com.energetik.app.sntapplication.service.PaymentService;
 import com.energetik.app.sntapplication.service.RoleService;
-import com.energetik.app.sntapplication.service.GardenerService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,16 +24,16 @@ public class InitUserAndRoles {
 
     private final GardenerService gardenerService;
     private final RoleService roleService;
-    private final PasswordEncoder passwordEncoder;
+    private final ConversationService conversationService;
 
     private final PaymentService paymentService;
 
     public InitUserAndRoles(GardenerService gardenerService, RoleService roleService,
-                            PasswordEncoder passwordEncoder, PaymentService paymentService) {
+                            ConversationService conversationService, PaymentService paymentService) {
         this.gardenerService = gardenerService;
         this.roleService = roleService;
+        this.conversationService = conversationService;
         this.paymentService = paymentService;
-        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @PostConstruct
@@ -48,12 +48,12 @@ public class InitUserAndRoles {
         roleService.saveRole(adminRole);
 
 
-        Gardener gardener = new Gardener();
-        gardener.setUsername("user");
-        gardener.setPassword("user");
+        Gardener user = new Gardener();
+        user.setUsername("user");
+        user.setPassword("user");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(roleService.findRoleByRolename("USER").orElse(null));
-        gardener.setRoles(userRoles);
+        user.setRoles(userRoles);
 
         Gardener admin = new Gardener();
         admin.setUsername("admin");
@@ -82,20 +82,29 @@ public class InitUserAndRoles {
         gardener1.setNote("Пытаюсь сделать рабочую программу");
         gardener1.setArchive(false);
 
-        gardenerService.saveGardener(gardener);
+        gardenerService.saveGardener(user);
         gardenerService.saveGardener(gardener1);
         gardenerService.saveGardener(admin);
 
         Payment payment1 = new Payment();
         payment1.setSumma(9500d);
-        payment1.setDateOfPayment(LocalDateTime.of(2001,1,1,12,0,0));
-        payment1.setPeriodFrom(LocalDateTime.of(2001, 1, 1, 0,0,0));
-        payment1.setPeriodTo(LocalDateTime.of(2001, 12, 31, 23,59,59));
+        payment1.setDateOfPayment(LocalDateTime.of(2001, 1, 1, 12, 0, 0));
+        payment1.setPeriodFrom(LocalDateTime.of(2001, 1, 1, 0, 0, 0));
+        payment1.setPeriodTo(LocalDateTime.of(2001, 12, 31, 23, 59, 59));
         payment1.setTargetPay(true);
         payment1.setElectricityPay(false);
         payment1.setCash(false);
         payment1.setGardener(gardenerService.findGardenerByUsername("aleks").orElse(null));
 
         paymentService.savePayment(payment1);
+
+        Conversation conversation1 = new Conversation();
+        conversation1.setDate(LocalDateTime.of(2023, 1, 1, 12, 0, 0));
+        conversation1.setIs_in_call(true);
+        conversation1.setIs_out_call(false);
+        conversation1.setReasone("Продажа участка");
+        conversation1.setAbout("Продает участок. Про долг за 22 год знает. Обещал погасить");
+        conversation1.setGardener(gardenerService.findGardenerById(2L).orElse(null));
+        conversationService.saveConversation(conversation1);
     }
 }

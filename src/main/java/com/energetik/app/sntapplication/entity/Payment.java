@@ -22,7 +22,7 @@ public class Payment {
     private boolean cash; // оплата наличкой
 
     @ManyToOne
-    @JoinColumn(name = "gardener_id", nullable = false)
+    @JoinColumn(name = "gardener_id")
     private Gardener gardener;
 
     public Payment() {
