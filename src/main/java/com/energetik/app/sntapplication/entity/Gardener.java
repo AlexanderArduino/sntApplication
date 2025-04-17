@@ -2,7 +2,8 @@ package com.energetik.app.sntapplication.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -52,6 +53,26 @@ public class Gardener implements UserDetails {
 
     @OneToMany(mappedBy = "gardener", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Payment> payments;
+
+    @OneToMany(mappedBy = "gardener", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Conversation> conversations;
+
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public List<Conversation> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(List<Conversation> conversations) {
+        this.conversations = conversations;
+    }
 
     public Long getId() {
         return id;
