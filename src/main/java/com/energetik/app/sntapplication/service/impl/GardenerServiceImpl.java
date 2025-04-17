@@ -85,6 +85,7 @@ public class GardenerServiceImpl implements GardenerService {
             nGardener.setArchive(gardener.isArchive());
             nGardener.setConversations(gardener.getConversations());
             nGardener.setPayments(gardener.getPayments());
+            nGardener.setDebtors(gardener.getDebtors());
             return gardenerRepository.save(nGardener);
         } else {
             throw new IllegalArgumentException(String.format("Gardener with username: %s was not exist", username));

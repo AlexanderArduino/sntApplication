@@ -1,14 +1,8 @@
 package com.energetik.app.sntapplication.init;
 
 
-import com.energetik.app.sntapplication.entity.Conversation;
-import com.energetik.app.sntapplication.entity.Gardener;
-import com.energetik.app.sntapplication.entity.Payment;
-import com.energetik.app.sntapplication.entity.Role;
-import com.energetik.app.sntapplication.service.ConversationService;
-import com.energetik.app.sntapplication.service.GardenerService;
-import com.energetik.app.sntapplication.service.PaymentService;
-import com.energetik.app.sntapplication.service.RoleService;
+import com.energetik.app.sntapplication.entity.*;
+import com.energetik.app.sntapplication.service.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -25,14 +19,17 @@ public class InitUserAndRoles {
     private final GardenerService gardenerService;
     private final RoleService roleService;
     private final ConversationService conversationService;
+    private final DebtorsService debtorsService;
 
     private final PaymentService paymentService;
 
     public InitUserAndRoles(GardenerService gardenerService, RoleService roleService,
-                            ConversationService conversationService, PaymentService paymentService) {
+                            ConversationService conversationService, DebtorsService debtorsService,
+                            PaymentService paymentService) {
         this.gardenerService = gardenerService;
         this.roleService = roleService;
         this.conversationService = conversationService;
+        this.debtorsService = debtorsService;
         this.paymentService = paymentService;
     }
 
@@ -106,5 +103,16 @@ public class InitUserAndRoles {
         conversation1.setAbout("Продает участок. Про долг за 22 год знает. Обещал погасить");
         conversation1.setGardener(gardenerService.findGardenerById(2L).orElse(null));
         conversationService.saveConversation(conversation1);
+
+        Debtors debtors1 = new Debtors();
+        debtors1.setOn_date(LocalDateTime.of(2023, 12,31,23,59,59));
+        debtors1.setBalance_member_pay(-123.00);
+        debtors1.setBalance_electricity_pay(5000.00);
+        debtors1.setGardener(gardenerService.findGardenerById(2L).orElse(null));
+        debtors1.setTo_exclusion(true);
+        debtors1.setExclude(false);
+        debtors1.setNote("Пометки");
+        debtorsService.saveDebtors(debtors1);
+
     }
 }

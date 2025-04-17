@@ -57,6 +57,16 @@ public class Gardener implements UserDetails {
     @OneToMany(mappedBy = "gardener", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Conversation> conversations;
 
+    @OneToOne(mappedBy = "gardener", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Debtors debtors;
+
+    public Debtors getDebtors() {
+        return debtors;
+    }
+
+    public void setDebtors(Debtors debtors) {
+        this.debtors = debtors;
+    }
 
     public List<Payment> getPayments() {
         return payments;
